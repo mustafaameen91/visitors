@@ -2,6 +2,10 @@ const sql = require("./db.js");
 
 const Visitor = function (visitor) {
    this.visitorName = visitor.visitorName;
+   this.isEntered = visitor.isEntered;
+   this.visitorTypeId = visitor.visitorTypeId;
+   this.enteredBy = visitor.enteredBy;
+   this.createdBy = visitor.createdBy;
 };
 
 Visitor.create = (newVisitor, result) => {

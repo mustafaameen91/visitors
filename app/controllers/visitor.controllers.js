@@ -9,6 +9,10 @@ exports.create = (req, res) => {
 
    const visitor = new Visitor({
       visitorName: req.body.visitorName,
+      isEntered: req.body.isEntered,
+      visitorTypeId: req.body.visitorTypeId,
+      enteredBy: req.body.enteredBy,
+      createdBy: req.body.createdBy,
    });
 
    Visitor.create(visitor, (err, data) => {
