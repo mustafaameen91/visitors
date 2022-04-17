@@ -11,6 +11,7 @@ require("./app/routes/role.routes.js")(app);
 require("./app/routes/reportType.routes.js")(app);
 require("./app/routes/dailyReport.routes.js")(app);
 require("./app/routes/visitor.routes")(app);
+require("./app/routes/visitorType.routes.js")(app);
 
 app.listen(3101, () => {
    console.log("Server is running on port 3101.");
