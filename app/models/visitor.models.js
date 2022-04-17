@@ -25,16 +25,19 @@ Visitor.create = (newVisitor, result) => {
 };
 
 Visitor.getAll = (result) => {
-   sql.query("SELECT * FROM visitor", (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(null, err);
-         return;
-      }
+   sql.query(
+      "SELECT * , DATE_FORMAT(visitor.createdAt,'%d/%m/%Y') AS createdAtFormatter FROM visitor JOIN visitorType JOIN user ON visitor.visitorTypeId = visitorType.idVisitorType AND user.idUser = visitor.enteredBy",
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+         }
 
-      console.log("visitors: ", res);
-      result(null, res);
-   });
+         console.log("visitors: ", res);
+         result(null, res);
+      }
+   );
 };
 
 Visitor.findById = (visitorId, result) => {
