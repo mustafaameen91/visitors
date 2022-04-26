@@ -7,6 +7,8 @@ module.exports = (app) => {
 
    app.get("/api/dailyReport/:id", DailyReport.findOne);
 
+   app.get("/api/userReports/:id", DailyReport.findOneByUserId);
+
    app.post("/api/dailyReport/:id", DailyReport.update);
 
    app.delete("/api/dailyReport/:id", DailyReport.delete);

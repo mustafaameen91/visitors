@@ -37,7 +37,7 @@ User.getAll = (result) => {
 
 User.login = (credentials, result) => {
    sql.query(
-      `SELECT * ,(select json_arrayagg(json_object('martyrDue', martyrDue.dueTypeId,'userId' , martyrDue.userId)) from martyrDue JOIN dueType ON dueType.idDueType = martyrDue.dueTypeId WHERE martyrDue.userId = user.idUser) AS martyrDue ,(select json_arrayagg(json_object('woundedDue', woundedDue.dueTypeId,'dueName' , dueType.dueName)) from woundedDue JOIN dueType ON dueType.idDueType = woundedDue.dueTypeId  WHERE woundedDue.userId = user.idUser) AS woundedDue FROM user WHERE userName = '${credentials.userName}' AND password = '${credentials.password}' AND verified = 1`,
+      `SELECT * FROM user WHERE userName = '${credentials.userName}' AND password = '${credentials.password}'`,
       (err, res) => {
          if (err) {
             console.log("error: ", err);

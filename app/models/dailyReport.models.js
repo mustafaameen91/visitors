@@ -1,7 +1,7 @@
 const sql = require("./db.js");
 
 const DailyReport = function (dailyReport) {
-   this.reportTypeId = dailyReport.reportTypeId;
+   this.title = dailyReport.title;
    this.note = dailyReport.note;
    this.createdBy = dailyReport.createdBy;
 };
@@ -23,16 +23,40 @@ DailyReport.create = (newDailyReport, result) => {
 };
 
 DailyReport.getAll = (result) => {
-   sql.query("SELECT * FROM dailyReport", (err, res) => {
-      if (err) {
-         console.log("error: ", err);
-         result(null, err);
-         return;
-      }
+   sql.query(
+      "SELECT * , DATE_FORMAT(dailyReport.createdAt,'%d/%m/%Y') AS createdAtFormatter FROM dailyReport JOIN user  ON user.idUser = dailyReport.createdBy",
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+         }
 
-      console.log("dailyReports: ", res);
-      result(null, res);
-   });
+         console.log("dailyReports: ", res);
+         result(null, res);
+      }
+   );
+};
+
+DailyReport.findByIdUser = (userId, result) => {
+   sql.query(
+      `SELECT * , DATE_FORMAT(dailyReport.createdAt,'%d/%m/%Y') AS createdAtFormatter FROM dailyReport JOIN user  ON user.idUser = dailyReport.createdBy  WHERE createdBy = ${userId}`,
+      (err, res) => {
+         if (err) {
+            console.log("error: ", err);
+            result(err, null);
+            return;
+         }
+
+         if (res.length) {
+            console.log("found DailyReport: ", res);
+            result(null, res);
+            return;
+         }
+
+         result({ kind: "not_found" }, null);
+      }
+   );
 };
 
 DailyReport.findById = (dailyReportId, result) => {

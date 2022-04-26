@@ -5,9 +5,17 @@ module.exports = (app) => {
 
    app.get("/api/visitors", Visitor.findAll);
 
+   app.get("/api/statistics", Visitor.statistics);
+
    app.get("/api/visitor/:id", Visitor.findOne);
 
-   app.post("/api/visitor/:id", Visitor.update);
+   app.get("/api/typeVisitor/:id", Visitor.findOneByVisitorType);
+
+   app.put("/api/visitor/:id", Visitor.update);
+
+   app.put("/api/updateVisitorExit/:id", Visitor.updateExit);
+
+   app.put("/api/updateVisitorEnter/:id", Visitor.updateEntered);
 
    app.delete("/api/visitor/:id", Visitor.delete);
 };
